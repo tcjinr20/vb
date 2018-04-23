@@ -160,7 +160,7 @@ function onOpen (e, torrentId) {
     // Magnet links opened from Chrome won't focus the app without a setTimeout.
     // The confirmation dialog Chrome shows causes Chrome to steal back the focus.
     // Electron issue: https://github.com/atom/electron/issues/4338
-    setTimeout(() => windows.main.show(), 100)
+    // setTimeout(() => windows.main.show(), 100)
 
     processArgv([ torrentId ])
   } else {
@@ -173,7 +173,7 @@ function onAppOpen (newArgv) {
 
   if (app.ipcReady) {
     log('Second app instance opened, but was prevented:', newArgv)
-    windows.main.show()
+    // windows.main.show()
 
     processArgv(newArgv)
   } else {

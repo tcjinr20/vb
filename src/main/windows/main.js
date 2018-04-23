@@ -49,8 +49,8 @@ function init (state, options) {
   })
 
   win.loadURL(config.WINDOW_MAIN,{ userAgent: config.USER_AGENT['andriod']})
-
-  win.once('ready-to-show', () => {
+    // win.openDevTools()
+  win.once('ready-to-show', () =>{
     if (!options.hidden) win.show()
   })
 
