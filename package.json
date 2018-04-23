@@ -30,15 +30,10 @@
     "iso-639-1": "^1.2.1",
     "languagedetect": "^1.1.1",
     "location-history": "^1.0.0",
-    "material-ui": "^0.17.0",
     "mkdirp": "^0.5.1",
     "musicmetadata": "^2.0.2",
     "network-address": "^1.1.0",
-    "parse-torrent": "^5.7.3",
     "prettier-bytes": "^1.0.1",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "react-tap-event-plugin": "^2.0.1",
     "rimraf": "^2.5.2",
     "run-parallel": "^1.1.6",
     "semver": "^5.1.0",
@@ -47,7 +42,6 @@
     "socket.io": "^2.1.0",
     "srt-to-vtt": "^1.1.1",
     "vlc-command": "^1.0.1",
-    "webtorrent": "0.x",
     "winreg": "^1.2.0",
     "zero-fill": "^2.2.3"
   },
@@ -73,7 +67,7 @@
     "walk-sync": "^0.3.1"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=5.0.0"
   },
   "homepage": "http://www.3cc.com",
   "keywords": [
@@ -85,7 +79,7 @@
     "appdmg": "^0.4.3"
   },
   "private": true,
-  "productName": "WebTorrent",
+  "productName": "3cc",
   "repository": {
     "type": "git",
     "url": "git://github.com/tcjinr20/vb.git"
