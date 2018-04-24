@@ -11,17 +11,13 @@
     "url": ""
   },
   "dependencies": {
-    "airplayer": "^2.0.0",
     "application-config": "^1.0.0",
     "arch": "^2.0.0",
     "auto-launch": "^4.0.1",
     "bitfield": "^1.0.2",
-    "bootstrap": "^3.3.7",
     "capture-frame": "^1.0.0",
     "chokidar": "^1.6.1",
-    "chromecasts": "^1.8.0",
     "cp-file": "^4.0.1",
-    "create-torrent": "^3.24.5",
     "debounce": "^1.0.0",
     "deep-equal": "^1.0.1",
     "dlnacasts": "^0.1.0",
@@ -30,6 +26,7 @@
     "fn-getter": "^1.0.0",
     "iso-639-1": "^1.2.1",
     "jQuery": "^1.7.4",
+    "jquery": "^3.3.1",
     "languagedetect": "^1.1.1",
     "location-history": "^1.0.0",
     "mkdirp": "^0.5.1",
@@ -43,7 +40,6 @@
     "simple-get": "^2.0.0",
     "socket.io": "^2.1.0",
     "srt-to-vtt": "^1.1.1",
-    "vlc-command": "^1.0.1",
     "winreg": "^1.2.0",
     "zero-fill": "^2.2.3"
   },

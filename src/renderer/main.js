@@ -2,41 +2,47 @@ $ = require('Jquery')
 const config = require('../config')
 const localhttp = require('../httpserver')
 const fs = require('fs')
-const mousehook = require('./lib/mousehook')
 const webview = document.querySelector('webview')
-
+const hook = require('./lib/htmlhook')
+const path = require('path')
+let inited = false
 function init (e) {
+    if(inited)return
+    inited= true
   $('#leftpanelbtn').click(function () {
     $('#leftpanel').toggle()
   })
+
   $('#forwark').click(function (e) {
     navigation($('#weburl').val())
   })
-
   $('#weburl').keypress(function (e) {
     if (e.keyCode == 13) {
       navigation($('#weburl').val())
     }
   })
-
   $("#refresh").click(function(){
     webview.reload()
   })
-
-  $('#item1').click(function () {
-    mousehook.insert(webview)
+  hook.init(webview)
+  $('#plugrefresh').click(walkplug)
+  $('#plugstart').click(function(){
+      hook.setplug($('#plugname').val())
   })
-
-  setTimeout(insertScript, 100)
+    walkplug()
 }
 
-const scripts = [{'src': 'js/test.js', 'back': insertDOM, 'name': 'po'}]
 
-function insertScript () {
-  for (var i = 0; i < scripts.length; i++) {
-    var incode = 'var bb; fetch("http://127.0.0.1:' + config.LOCAL_HTTP_PORT + '/' + scripts[i]['src'] + '").then(resp =>{bb=resp;return resp.text()}).then(back=>{eval(back);bb["' + scripts[i]['name'] + '"]=' + scripts[i]['name'] + ';return bb})'
-    webview.executeJavaScript(incode, true, scripts[i]['back'])
-  }
+
+function walkplug(){
+    $('#plugname').empty()
+    fs.readdir(config.PLUG_PATH,function(err,files){
+        if(!err){
+            for (var i=0;i<files.length;i++){
+                $('#plugname').append("<option>"+path.parse(files[i])['name']+"</option>")
+            }
+        }
+    })
 }
 
 function navigation (url) {
