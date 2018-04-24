@@ -65,11 +65,11 @@ module.exports = {
   WINDOW_WEBTORRENT: 'file://' + path.join(__dirname, '..', 'static', 'webtorrent.html'),
 
   WINDOW_INITIAL_BOUNDS: {
-    width: 300,
+    width: 500,
     height: UI_HEADER_HEIGHT + (UI_TORRENT_HEIGHT * 6) // header + 6 torrents
   },
   WINDOW_MIN_HEIGHT: UI_HEADER_HEIGHT + (UI_TORRENT_HEIGHT * 2), // header + 2 torrents
-  WINDOW_MIN_WIDTH: 200,
+  WINDOW_MIN_WIDTH: 400,
 
   UI_HEADER_HEIGHT: UI_HEADER_HEIGHT,
   UI_TORRENT_HEIGHT: UI_TORRENT_HEIGHT,

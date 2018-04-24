@@ -9,8 +9,8 @@ let inited = false
 webview.addEventListener('dom-ready', init)
 
 function init (e) {
-    if(inited)return
-    inited= true
+  if (inited) return
+  inited = true
   $('#leftpanelbtn').click(function () {
     $('#leftpanel').toggle()
   })
@@ -23,28 +23,45 @@ function init (e) {
       navigation($('#weburl').val())
     }
   })
-  $("#refresh").click(function(){
+  $('#refresh').click(function () {
     webview.reload()
   })
   hook.init(webview)
   $('#plugrefresh').click(walkplug)
-  $('#plugstart').click(function(){
-      hook.setplug($('#plugname').val())
-  })
-    walkplug()
+
+  walkplug()
 }
 
+function walkplug () {
+  var templete = '<tr>\n' +
+      '                            <td>{name}</td>\n' +
+      '                            <td>{inum}</td>\n' +
+      '                            <td>\n' +
+      '                                <button class="btn btn-mini btn-default plugstart" data-name="{name}">\n' +
+      '                                    <span class="icon icon-play"></span>\n' +
+      '                                </button>\n' +
+      '                                <button class="btn btn-mini btn-default plugstop" data-name="{name}" style="display: none">\n' +
+      '                                    <span class="icon icon-stop"></span>\n' +
+      '                                </button>\n' +
+      '                            </td>\n' +
+      '                        </tr>'
+  $('#plugname').empty()
+  fs.readdir(config.PLUG_PATH, function (err, files) {
+    if (!err) {
+      var items ='';
+      for (var i = 0; i < files.length; i++) {
+        // $('#plugname').append("<option>"+path.parse(files[i])['name']+"</option>")
+        items += templete.replace(/{name}/g,path.parse(files[i])['name']).replace('{inum}',i)
+      }
+      $('#plugname').append(items)
+      $('.plugstart').click(function (e) {
+        var nn = $(e.currentTarget).data('name')
+        hook.setplug(nn)
+      })
+    }
+  })
 
 
-function walkplug(){
-    $('#plugname').empty()
-    fs.readdir(config.PLUG_PATH,function(err,files){
-        if(!err){
-            for (var i=0;i<files.length;i++){
-                $('#plugname').append("<option>"+path.parse(files[i])['name']+"</option>")
-            }
-        }
-    })
 }
 
 function navigation (url) {
@@ -57,4 +74,3 @@ navigation(config.WEBVIEW_SRC)
 function insertDOM (dom) {
   console.log(dom)
 }
-

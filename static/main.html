@@ -35,26 +35,36 @@
     </div>
   </header>
   <div class="window-content">
-      <div style="width: 60%" id="leftpanel">
+      <div style="width: 60%;position: absolute;
+    background-color: white;
+    height: 100%;" class="pull-left" id="leftpanel">
         <ul class="list-group">
           <li class="list-group-header">
-              <button class="btn btn-default" id="plugrefresh">
+              <button class="btn btn-mini btn-default" id="plugrefresh">
                   <span class="icon icon-arrows-ccw"></span>
               </button>
-              <button class="btn btn-default" id="plugstart">
-                  <span class="icon icon-search"></span>
-              </button>
-              <select class="form-control" style="width:50%" id="plugname">
-                  <option>空</option>
-              </select>
           </li>
-          <li class="list-group-item" id="item1">
-              <a class="nav-group-item" >
-              </a>
+          <li class="list-group-item">
+            <div class="">
+                <div class="pane padded-bottom-more">
+                    <table class="table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Kind</th>
+                            <th>operate</th>
+                        </tr>
+                        </thead>
+                        <tbody id="plugname">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
           </li>
         </ul>
       </div>
-      <webview src="empty.html" style="width: 100%" disablewebsecurity ></webview>
+      <webview class="pull-left" src="empty.html" style="width: 100%" disablewebsecurity ></webview>
   </div>
   <footer class="toolbar toolbar-footer">
     <h1 class="title">tool</h1>
