@@ -6,6 +6,8 @@ const webview = document.querySelector('webview')
 const hook = require('./lib/htmlhook')
 const path = require('path')
 let inited = false
+webview.addEventListener('dom-ready', init)
+
 function init (e) {
     if(inited)return
     inited= true
@@ -48,7 +50,6 @@ function walkplug(){
 function navigation (url) {
   $('webview').attr({'src': url, 'useragent': config.USER_AGENT.andriod, 'httpreferrer': 'https://www.baidu.com'})
   $('#weburl').val(url)
-  webview.addEventListener('dom-ready', init)
 }
 
 navigation(config.WEBVIEW_SRC)
