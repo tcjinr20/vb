@@ -18,7 +18,7 @@ const windows = require('./windows')
 let menu = null
 
 function init () {
-  menu = electron.Menu.buildFromTemplate(getMenuTemplate())
+  menu = electron.Menu.buildFromTemplate(getNewMenuTemplate())
   electron.Menu.setApplicationMenu(menu)
 }
 
@@ -76,6 +76,31 @@ function getMenuItem (label) {
     })
     if (menuItem) return menuItem
   }
+}
+
+
+function getNewMenuTemplate () {
+    const template = [
+    {
+        label: 'View',
+            submenu: [
+        {
+            label: 'Dev Tools',
+            accelerator: process.platform === 'darwin'
+                ? 'Alt+Command+I'
+                : 'Ctrl+Shift+I',
+            click: () => windows.main.toggleDevTools()
+        },{
+            label: 'Web Tools',
+            accelerator: process.platform === 'darwin'
+                ? 'Alt+Command+O'
+                : 'Ctrl+Shift+O',
+            click: () => windows.main.send('toggleDevTools')
+}
+    ]
+    }
+]
+    return template
 }
 
 function getMenuTemplate () {

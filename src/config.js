@@ -25,7 +25,7 @@ module.exports = {
   SOCKET_PORT: 4324,
   LOCAL_HTTP_PORT:4544,
   PLUG_PATH:path.join(__dirname, '..', 'static', 'plug'),
-  WEBVIEW_SRC: 'http://v.youku.com/v_show/id_XMzU1MjgxOTgzNg==.html?f=51453050',
+  WEBVIEW_SRC: 'http://www.btbtdy.com/',
   APP_COPYRIGHT: 'Copyright © 2014-2018 ' + APP_TEAM,
   APP_FILE_ICON: path.join(__dirname, '..', 'static', '3cFile'),
   APP_ICON: path.join(__dirname, '..', 'static', '3c'),

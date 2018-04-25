@@ -8,7 +8,7 @@ if (label) query+=label;
 if(id) query+='#'+id
 if(cla)query+="."+cla
 tele = document.querySelector(query);
-console.log(query)
+
 if(tele){
     if(attr){
         var obj={};
@@ -17,9 +17,23 @@ if(tele){
         }
         ele=obj
     }else{
-        ele = tele.innerHTML;
+        if(c3uuid){
+            ele={
+                uuid:c3uuid,
+                html:tele.outerHTML
+            }
+        }else{
+            ele = tele.outerHTML;
+        }
     }
 }else{
-    ele = 'can not find '+query;
+    if(c3uuid){
+        ele={
+            uuid:c3uuid,
+            html:'can not find '+query
+        }
+    }else{
+        ele = 'can not find '+query;
+    }
 }
 

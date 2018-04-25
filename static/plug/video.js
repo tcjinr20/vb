@@ -1,23 +1,32 @@
+var util=require('util');
+var Code = require('./code')
+const fs = require('fs')
+var $=null;
+var Video = module.exports = function Video(jquery) {
+    $=jquery
+    this.init()
+    this.addURLcode('http://m.btbtdy.com/')
+    this.addElecode({'class':'list'},bb)
+    // this.sleep()
+}
 
-var video=module.exports = function Video(dis){
-    var self = this;
-}
-//一直循环获取，除非返回false||0
-video.prototype.hookcode = function () {
+function bb(dom){
+    var filecon = 'img,name,actor,alink\n';
+    $(dom).find('ul>li').each(function(i,e){
+        var b = '';
+        b = $(e).find('.pic').css('background-image')
+        b+= ","+$(e).find('.name').text()
+        b+= ","+$(e).find('.actor').text()
+        b+= ","+$(e).find('.alink').attr('href')
+        filecon+=b+'\n'
+    })
 
-    // return {'code':3,'param':{'id':'banner','attr':['offsetHeight','innerText']}}
-    return {'code':2,'param':['local','offset']}
+    fs.writeFile('video.csv',filecon,function () {
+    })
+    this.end()
+    this.goon()
 }
-// 1
-video.prototype.hookhtml = function(html){
-console.log(html)
-}
-// 2 {lcaol,pool}
-video.prototype.hookval = function (val) {
-    console.log(val)
-}
-// 3 innertHTML || {'class':po,'id':po,label:body,attr:[localName,offsetHeight]}
-video.prototype.hookele = function (ele) {
-    console.log(ele)
-}
+
+util.inherits(Video,Code)
+
 

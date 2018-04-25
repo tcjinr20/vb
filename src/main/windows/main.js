@@ -23,7 +23,7 @@ const app = electron.app
 
 const config = require('../../config')
 const log = require('../log')
-const menu = require('../menu')
+// const menu = require('../menu')
 
 function init (state, options) {
   if (main.win) {
@@ -58,15 +58,15 @@ function init (state, options) {
     win.setSheetOffset(config.UI_HEADER_HEIGHT)
   }
 
-  win.webContents.on('dom-ready', function () {
-    menu.onToggleFullScreen(main.win.isFullScreen())
-  })
+  // win.webContents.on('dom-ready', function () {
+  //   menu.onToggleFullScreen(main.win.isFullScreen())
+  // })
 
-  win.webContents.on('will-navigate', (e, url) => {
+  // win.webContents.on('will-navigate', (e, url) => {
     // Prevent drag-and-drop from navigating the Electron window, which can happen
     // before our drag-and-drop handlers have been initialized.
-    e.preventDefault()
-  })
+  //   e.preventDefault()
+  // })
 
   win.on('blur', onWindowBlur)
   win.on('focus', onWindowFocus)
@@ -75,13 +75,13 @@ function init (state, options) {
   win.on('show', onWindowFocus)
 
   win.on('enter-full-screen', function () {
-    menu.onToggleFullScreen(true)
+    // menu.onToggleFullScreen(true)
     send('fullscreenChanged', true)
     win.setMenuBarVisibility(false)
   })
 
   win.on('leave-full-screen', function () {
-    menu.onToggleFullScreen(false)
+    // menu.onToggleFullScreen(false)
     send('fullscreenChanged', false)
     win.setMenuBarVisibility(true)
   })
@@ -127,6 +127,7 @@ function openSocket(){
 function send (...args) {
   if (!main.win) return
   main.win.send(...args)
+
 }
 
 /**
@@ -214,7 +215,7 @@ function toggleAlwaysOnTop (flag) {
   }
   log(`toggleAlwaysOnTop ${flag}`)
   main.win.setAlwaysOnTop(flag)
-  menu.onToggleAlwaysOnTop(flag)
+  // menu.onToggleAlwaysOnTop(flag)
 }
 
 function toggleDevTools () {
@@ -225,6 +226,7 @@ function toggleDevTools () {
   } else {
     main.win.webContents.openDevTools({ detach: true })
   }
+
 }
 
 function toggleFullScreen (flag) {
@@ -245,7 +247,7 @@ function toggleFullScreen (flag) {
 }
 
 function onWindowBlur () {
-  menu.setWindowFocus(false)
+  // menu.setWindowFocus(false)
 
   if (process.platform !== 'darwin') {
     const tray = require('../tray')
@@ -254,7 +256,7 @@ function onWindowBlur () {
 }
 
 function onWindowFocus () {
-  menu.setWindowFocus(true)
+  // menu.setWindowFocus(true)
 
   if (process.platform !== 'darwin') {
     const tray = require('../tray')

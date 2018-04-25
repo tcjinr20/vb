@@ -5,8 +5,27 @@ const fs = require('fs')
 const webview = document.querySelector('webview')
 const hook = require('./lib/htmlhook')
 const path = require('path')
+const {ipcRenderer} = require('electron')
 let inited = false
 webview.addEventListener('dom-ready', init)
+webview.addEventListener('did-navigate',function (e) {
+    $('#weburl').val(e['url'])
+})
+webview.addEventListener('update-target-url',function (e) {
+    $('#foot').text(e['url'])
+})
+
+ipcRenderer.on('toggleDevTools',function () {
+    if (webview.isDevToolsOpened()) {
+        webview.closeDevTools()
+    } else {
+        webview.openDevTools({ detach: true })
+    }
+})
+
+webview.addEventListener('new-window', (e) => {
+    navigation(e['url'])
+})
 
 function init (e) {
   if (inited) return
@@ -43,6 +62,9 @@ function walkplug () {
       '                                <button class="btn btn-mini btn-default plugstop" data-name="{name}" style="display: none">\n' +
       '                                    <span class="icon icon-stop"></span>\n' +
       '                                </button>\n' +
+      '                                <button class="btn btn-mini btn-default plugrefresh" data-name="{name}" style="display: none">\n' +
+      '                                    <span class="icon icon-arrows-ccw"></span>\n' +
+      '                                </button>\n' +
       '                            </td>\n' +
       '                        </tr>'
   $('#plugname').empty()
@@ -55,14 +77,21 @@ function walkplug () {
       }
       $('#plugname').append(items)
       $('.plugstart').click(function (e) {
+        $(e.currentTarget).hide()
         var nn = $(e.currentTarget).data('name')
+        $(".plugstop[data-name="+nn+"]").show()
         hook.setplug(nn)
       })
+        $('.plugrefresh').click(function (e) {
+            $(e.currentTarget).hide()
+            var nn = $(e.currentTarget).data('name')
+            $(".plugstop[data-name="+nn+"]").show()
+            hook.reRun(nn)
+        })
     }
   })
-
-
 }
+
 
 function navigation (url) {
   $('webview').attr({'src': url, 'useragent': config.USER_AGENT.andriod, 'httpreferrer': 'https://www.baidu.com'})
