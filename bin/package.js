@@ -123,14 +123,14 @@ const darwin = {
   arch: 'x64',
 
   // The bundle identifier to use in the application's plist (Mac only).
-  'app-bundle-id': 'io.webtorrent.webtorrent',
+  'app-bundle-id': 'com.chouchong',
 
   // The application category type, as shown in the Finder via "View" -> "Arrange by
   // Application Category" when viewing the Applications directory (Mac only).
-  'app-category-type': 'public.app-category.utilities',
+  'app-category-type': 'public.chouchong.utilities',
 
   // The bundle identifier to use in the application helper's plist (Mac only).
-  'helper-bundle-id': 'io.webtorrent.webtorrent-helper',
+  'helper-bundle-id': 'com.chouchong.helper',
 
   // Application icon.
   icon: config.APP_ICON + '.icns'
@@ -196,57 +196,57 @@ function buildDarwin (cb) {
     const infoPlistPath = path.join(contentsPath, 'Info.plist')
     const infoPlist = plist.parse(fs.readFileSync(infoPlistPath, 'utf8'))
 
-    infoPlist.CFBundleDocumentTypes = [
-      {
-        CFBundleTypeExtensions: [ 'torrent' ],
-        CFBundleTypeIconFile: path.basename(config.APP_FILE_ICON) + '.icns',
-        CFBundleTypeName: 'BitTorrent Document',
-        CFBundleTypeRole: 'Editor',
-        LSHandlerRank: 'Owner',
-        LSItemContentTypes: [ 'org.bittorrent.torrent' ]
-      },
-      {
-        CFBundleTypeName: 'Any',
-        CFBundleTypeOSTypes: [ '****' ],
-        CFBundleTypeRole: 'Editor',
-        LSHandlerRank: 'Owner',
-        LSTypeIsPackage: false
-      }
-    ]
-
-    infoPlist.CFBundleURLTypes = [
-      {
-        CFBundleTypeRole: 'Editor',
-        CFBundleURLIconFile: path.basename(config.APP_FILE_ICON) + '.icns',
-        CFBundleURLName: 'BitTorrent Magnet URL',
-        CFBundleURLSchemes: [ 'magnet' ]
-      },
-      {
-        CFBundleTypeRole: 'Editor',
-        CFBundleURLIconFile: path.basename(config.APP_FILE_ICON) + '.icns',
-        CFBundleURLName: 'BitTorrent Stream-Magnet URL',
-        CFBundleURLSchemes: [ 'stream-magnet' ]
-      }
-    ]
-
-    infoPlist.UTExportedTypeDeclarations = [
-      {
-        UTTypeConformsTo: [
-          'public.data',
-          'public.item',
-          'com.bittorrent.torrent'
-        ],
-        UTTypeDescription: 'BitTorrent Document',
-        UTTypeIconFile: path.basename(config.APP_FILE_ICON) + '.icns',
-        UTTypeIdentifier: 'org.bittorrent.torrent',
-        UTTypeReferenceURL: 'http://www.bittorrent.org/beps/bep_0000.html',
-        UTTypeTagSpecification: {
-          'com.apple.ostype': 'TORR',
-          'public.filename-extension': [ 'torrent' ],
-          'public.mime-type': 'application/x-bittorrent'
-        }
-      }
-    ]
+    // infoPlist.CFBundleDocumentTypes = [
+    //   {
+    //     CFBundleTypeExtensions: [ 'torrent' ],
+    //     CFBundleTypeIconFile: path.basename(config.APP_FILE_ICON) + '.icns',
+    //     CFBundleTypeName: 'BitTorrent Document',
+    //     CFBundleTypeRole: 'Editor',
+    //     LSHandlerRank: 'Owner',
+    //     LSItemContentTypes: [ 'org.bittorrent.torrent' ]
+    //   },
+    //   {
+    //     CFBundleTypeName: 'Any',
+    //     CFBundleTypeOSTypes: [ '****' ],
+    //     CFBundleTypeRole: 'Editor',
+    //     LSHandlerRank: 'Owner',
+    //     LSTypeIsPackage: false
+    //   }
+    // ]
+    //
+    // infoPlist.CFBundleURLTypes = [
+    //   {
+    //     CFBundleTypeRole: 'Editor',
+    //     CFBundleURLIconFile: path.basename(config.APP_FILE_ICON) + '.icns',
+    //     CFBundleURLName: 'BitTorrent Magnet URL',
+    //     CFBundleURLSchemes: [ 'magnet' ]
+    //   },
+    //   {
+    //     CFBundleTypeRole: 'Editor',
+    //     CFBundleURLIconFile: path.basename(config.APP_FILE_ICON) + '.icns',
+    //     CFBundleURLName: 'BitTorrent Stream-Magnet URL',
+    //     CFBundleURLSchemes: [ 'stream-magnet' ]
+    //   }
+    // ]
+    //
+    // infoPlist.UTExportedTypeDeclarations = [
+    //   {
+    //     UTTypeConformsTo: [
+    //       'public.data',
+    //       'public.item',
+    //       'com.bittorrent.torrent'
+    //     ],
+    //     UTTypeDescription: 'BitTorrent Document',
+    //     UTTypeIconFile: path.basename(config.APP_FILE_ICON) + '.icns',
+    //     UTTypeIdentifier: 'org.bittorrent.torrent',
+    //     UTTypeReferenceURL: 'http://www.bittorrent.org/beps/bep_0000.html',
+    //     UTTypeTagSpecification: {
+    //       'com.apple.ostype': 'TORR',
+    //       'public.filename-extension': [ 'torrent' ],
+    //       'public.mime-type': 'application/x-bittorrent'
+    //     }
+    //   }
+    // ]
 
     fs.writeFileSync(infoPlistPath, plist.build(infoPlist))
 

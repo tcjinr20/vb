@@ -1,11 +1,11 @@
 {
-  "name": "election-brow",
-  "description": "brow",
+  "name": "Bedbug",
+  "description": "Bedbug",
   "version": "0.10.0",
   "author": {
-    "name": "3cc",
-    "email": "3cc@163.com",
-    "url": "www.3cc.com"
+    "name": "chouchong",
+    "email": "chouchong@163.com",
+    "url": "www.chouchong.com"
   },
   "bugs": {
     "url": ""
@@ -20,17 +20,14 @@
     "cp-file": "^4.0.1",
     "debounce": "^1.0.0",
     "deep-equal": "^1.0.1",
-    "dlnacasts": "^0.1.0",
     "drag-drop": "^2.12.1",
     "es6-error": "^4.0.0",
     "fn-getter": "^1.0.0",
     "iso-639-1": "^1.2.1",
-    "jQuery": "^1.7.4",
     "jquery": "^3.3.1",
     "languagedetect": "^1.1.1",
     "location-history": "^1.0.0",
     "mkdirp": "^0.5.1",
-    "musicmetadata": "^2.0.2",
     "network-address": "^1.1.0",
     "prettier-bytes": "^1.0.1",
     "rimraf": "^2.5.2",
@@ -67,7 +64,7 @@
   "engines": {
     "node": ">=5.0.0"
   },
-  "homepage": "http://www.3cc.com",
+  "homepage": "http://www.chouchong.com",
   "keywords": [
     "electron-app"
   ],

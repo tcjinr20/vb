@@ -23,9 +23,9 @@ rimraf.sync(config.CONFIG_PATH)
 // Remove any temporary files
 let tmpPath
 try {
-  tmpPath = path.join(fs.statSync('/tmp') && '/tmp', 'webtorrent')
+  tmpPath = path.join(fs.statSync('/tmp') && '/tmp', 'chouchong')
 } catch (err) {
-  tmpPath = path.join(os.tmpdir(), 'webtorrent')
+  tmpPath = path.join(os.tmpdir(), 'chouchong')
 }
 rimraf.sync(tmpPath)
 

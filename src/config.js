@@ -1,27 +1,28 @@
-const appConfig = require('application-config')('WebTorrent')
+const appConfig = require('application-config')('chouchong')
 const path = require('path')
 const electron = require('electron')
 const arch = require('arch')
 
-const APP_NAME = '3C'
-const APP_TEAM = 'WebTorrent, LLC'
+const APP_NAME = '臭虫'
+const APP_TEAM = '臭虫, LLC'
 const APP_VERSION = require('../package.json').version
 
 const IS_TEST = isTest()
 const PORTABLE_PATH = IS_TEST
-  ? path.join(process.platform === 'win32' ? 'C:\\Windows\\Temp' : '/tmp', 'WebTorrentTest')
+  ? path.join(process.platform === 'win32' ? 'C:\\Windows\\Temp' : '/tmp', 'chouchong')
   : path.join(path.dirname(process.execPath), 'Portable Settings')
 const IS_PRODUCTION = isProduction()
 const IS_PORTABLE = isPortable()
 
 const UI_HEADER_HEIGHT = 38
 const UI_TORRENT_HEIGHT = 100
+const WEB_HOST = "http://www.basezhushou.com"
 
 module.exports = {
-  ANNOUNCEMENT_URL: 'https://webtorrent.io/desktop/announcement',
-  AUTO_UPDATE_URL: 'https://webtorrent.io/desktop/update',
-  CRASH_REPORT_URL: 'https://webtorrent.io/desktop/crash-report',
-  TELEMETRY_URL: 'https://webtorrent.io/desktop/telemetry',
+  ANNOUNCEMENT_URL: WEB_HOST+'/announcement',
+  AUTO_UPDATE_URL: WEB_HOST+'/update',
+  CRASH_REPORT_URL: WEB_HOST+'/crash-report',
+  TELEMETRY_URL: WEB_HOST+'/telemetry',
   SOCKET_PORT: 4324,
   LOCAL_HTTP_PORT:4544,
   PLUG_PATH:path.join(__dirname, '..', 'static', 'plug'),
@@ -32,22 +33,21 @@ module.exports = {
   APP_NAME: APP_NAME,
   APP_TEAM: APP_TEAM,
   APP_VERSION: APP_VERSION,
-  APP_WINDOW_TITLE: APP_NAME + ' (BETA)',
+  APP_WINDOW_TITLE: APP_NAME,
 
   CONFIG_PATH: getConfigPath(),
 
-  DEFAULT_TORRENTS: [
-  ],
+  DEFAULT_PLUG: ['video'],
 
   DELAYED_INIT: 3000 /* 3 seconds */,
 
   DEFAULT_DOWNLOAD_PATH: getDefaultDownloadPath(),
 
-  GITHUB_URL: 'https://github.com/webtorrent/webtorrent-desktop',
-  GITHUB_URL_ISSUES: 'https://github.com/webtorrent/webtorrent-desktop/issues',
-  GITHUB_URL_RAW: 'https://raw.githubusercontent.com/webtorrent/webtorrent-desktop/master',
+  GITHUB_URL: 'https://github.com/chouchong',
+  GITHUB_URL_ISSUES: 'https://github.com/chouchong/issues',
+  GITHUB_URL_RAW: 'https://raw.githubusercontent.com/chouchong/master',
 
-  HOME_PAGE_URL: 'https://webtorrent.io',
+  HOME_PAGE_URL: WEB_HOST,
 
   IS_PORTABLE: IS_PORTABLE,
   IS_PRODUCTION: IS_PRODUCTION,
@@ -58,11 +58,10 @@ module.exports = {
   POSTER_PATH: path.join(getConfigPath(), 'Posters'),
   ROOT_PATH: path.join(__dirname, '..'),
   STATIC_PATH: path.join(__dirname, '..', 'static'),
-  TORRENT_PATH: path.join(getConfigPath(), 'Torrents'),
 
   WINDOW_ABOUT: 'file://' + path.join(__dirname, '..', 'static', 'about.html'),
   WINDOW_MAIN: 'file://' + path.join(__dirname, '..', 'static', 'main.html'),
-  WINDOW_WEBTORRENT: 'file://' + path.join(__dirname, '..', 'static', 'webtorrent.html'),
+  WINDOW_WEBTORRENT: 'file://' + path.join(__dirname, '..', 'static', 'chouchong.html'),
 
   WINDOW_INITIAL_BOUNDS: {
     width: 500,

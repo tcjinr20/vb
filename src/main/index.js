@@ -10,7 +10,7 @@ const crashReporter = require('../crash-reporter')
 const ipc = require('./ipc')
 const log = require('./log')
 const menu = require('./menu')
-const State = require('../renderer/lib/state')
+// const State = require('../renderer/lib/state')
 const windows = require('./windows')
 
 let shouldQuit = false
@@ -65,22 +65,18 @@ function init () {
 
   parallel({
     appReady: (cb) => app.on('ready', () => cb(null)),
-    state: (cb) => State.load(cb)
   }, onReady)
 
   function onReady (err, results) {
     if (err) throw err
 
     isReady = true
-    const state = results.state
-
-    windows.main.init(state, {hidden: hidden})
-    // windows.webtorrent.init()
+    windows.main.init(null, {hidden: hidden})
     menu.init()
 
     // To keep app startup fast, some code is delayed.
     setTimeout(() => {
-      delayedInit(state)
+      delayedInit()
     }, config.DELAYED_INIT)
 
     // Report uncaught exceptions
@@ -90,9 +86,6 @@ function init () {
       windows.main.dispatch('uncaughtError', 'main', error)
     })
   }
-
-  app.on('open-file', onOpen)
-  app.on('open-url', onOpen)
 
   ipc.init()
 
@@ -124,48 +117,14 @@ function init () {
   })
 }
 
-function delayedInit (state) {
+function delayedInit () {
   if (app.isQuitting) return
 
   const announcement = require('./announcement')
   const dock = require('./dock')
   const updater = require('./updater')
-  const FolderWatcher = require('./folder-watcher')
-  const folderWatcher = new FolderWatcher({window: windows.main, state})
-
   announcement.init()
   dock.init()
-  // updater.init()
-
-  ipc.setModule('folderWatcher', folderWatcher)
-  if (folderWatcher.isEnabled()) {
-    folderWatcher.start()
-  }
-
-  if (process.platform === 'win32') {
-    const userTasks = require('./user-tasks')
-    userTasks.init()
-  }
-
-  if (process.platform !== 'darwin') {
-    const tray = require('./tray')
-    tray.init()
-  }
-}
-
-function onOpen (e, torrentId) {
-  e.preventDefault()
-
-  if (app.ipcReady) {
-    // Magnet links opened from Chrome won't focus the app without a setTimeout.
-    // The confirmation dialog Chrome shows causes Chrome to steal back the focus.
-    // Electron issue: https://github.com/atom/electron/issues/4338
-    // setTimeout(() => windows.main.show(), 100)
-
-    processArgv([ torrentId ])
-  } else {
-    argv.push(torrentId)
-  }
 }
 
 function onAppOpen (newArgv) {
@@ -192,7 +151,6 @@ function sliceArgv (argv) {
 }
 
 function processArgv (argv) {
-  let torrentIds = []
   argv.forEach(function (arg) {
     if (arg === '-n' || arg === '-o' || arg === '-u') {
       // Critical path: Only load the 'dialog' package if it is needed
@@ -217,10 +175,6 @@ function processArgv (argv) {
       // Ignore '.' argument, which gets misinterpreted as a torrent id, when a
       // development copy of WebTorrent is started while a production version is
       // running.
-      torrentIds.push(arg)
     }
   })
-  if (torrentIds.length > 0) {
-    windows.main.dispatch('onOpen', torrentIds)
-  }
 }

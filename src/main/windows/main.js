@@ -11,26 +11,23 @@ const main = module.exports = {
   toggleAlwaysOnTop,
   toggleDevTools,
   toggleFullScreen,
-  openSocket,
   win: null
 }
 
 const electron = require('electron')
 const debounce = require('debounce')
-const webclient = require('../webclient')
 
 const app = electron.app
 
 const config = require('../../config')
 const log = require('../log')
-// const menu = require('../menu')
 
-function init (state, options) {
+function init (options) {
   if (main.win) {
     return main.win.show()
   }
 
-  const initialBounds = Object.assign(config.WINDOW_INITIAL_BOUNDS, state.saved.bounds)
+  const initialBounds = config.WINDOW_INITIAL_BOUNDS
   const win = main.win = new electron.BrowserWindow({
     backgroundColor: '#282828',
     backgroundThrottling: false, // do not throttle animations/timers when page is background
@@ -49,7 +46,6 @@ function init (state, options) {
   })
 
   win.loadURL(config.WINDOW_MAIN,{ userAgent: config.USER_AGENT['andriod']})
-    // win.openDevTools()
   win.once('ready-to-show', () =>{
     if (!options.hidden) win.show()
   })
@@ -57,16 +53,6 @@ function init (state, options) {
   if (win.setSheetOffset) {
     win.setSheetOffset(config.UI_HEADER_HEIGHT)
   }
-
-  // win.webContents.on('dom-ready', function () {
-  //   menu.onToggleFullScreen(main.win.isFullScreen())
-  // })
-
-  // win.webContents.on('will-navigate', (e, url) => {
-    // Prevent drag-and-drop from navigating the Electron window, which can happen
-    // before our drag-and-drop handlers have been initialized.
-  //   e.preventDefault()
-  // })
 
   win.on('blur', onWindowBlur)
   win.on('focus', onWindowFocus)
@@ -118,10 +104,6 @@ function hide () {
   if (!main.win) return
   dispatch('backToList')
   main.win.hide()
-}
-
-function openSocket(){
-    webclient.open();
 }
 
 function send (...args) {
@@ -213,9 +195,8 @@ function toggleAlwaysOnTop (flag) {
   if (flag == null) {
     flag = !main.win.isAlwaysOnTop()
   }
-  log(`toggleAlwaysOnTop ${flag}`)
+
   main.win.setAlwaysOnTop(flag)
-  // menu.onToggleAlwaysOnTop(flag)
 }
 
 function toggleDevTools () {
