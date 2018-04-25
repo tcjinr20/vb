@@ -1,4 +1,4 @@
-$ = require('Jquery')
+$ = require('jquery')
 const config = require('../config')
 const localhttp = require('../httpserver')
 const fs = require('fs')

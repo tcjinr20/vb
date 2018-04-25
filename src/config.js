@@ -1,15 +1,15 @@
-const appConfig = require('application-config')('chouchong')
+const appConfig = require('application-config')('bedbug')
 const path = require('path')
 const electron = require('electron')
 const arch = require('arch')
 
-const APP_NAME = '臭虫'
-const APP_TEAM = '臭虫, LLC'
+const APP_NAME = 'bedbug'
+const APP_TEAM = 'bedbug, LLC'
 const APP_VERSION = require('../package.json').version
 
 const IS_TEST = isTest()
 const PORTABLE_PATH = IS_TEST
-  ? path.join(process.platform === 'win32' ? 'C:\\Windows\\Temp' : '/tmp', 'chouchong')
+  ? path.join(process.platform === 'win32' ? 'C:\\Windows\\Temp' : '/tmp', 'bedbug')
   : path.join(path.dirname(process.execPath), 'Portable Settings')
 const IS_PRODUCTION = isProduction()
 const IS_PORTABLE = isPortable()
@@ -28,8 +28,8 @@ module.exports = {
   PLUG_PATH:path.join(__dirname, '..', 'static', 'plug'),
   WEBVIEW_SRC: 'http://www.btbtdy.com/',
   APP_COPYRIGHT: 'Copyright © 2014-2018 ' + APP_TEAM,
-  APP_FILE_ICON: path.join(__dirname, '..', 'static', '3cFile'),
-  APP_ICON: path.join(__dirname, '..', 'static', '3c'),
+  APP_FILE_ICON: path.join(__dirname, '..', 'static', 'bedbugFile'),
+  APP_ICON: path.join(__dirname, '..', 'static', 'bedbug'),
   APP_NAME: APP_NAME,
   APP_TEAM: APP_TEAM,
   APP_VERSION: APP_VERSION,

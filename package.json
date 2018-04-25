@@ -38,7 +38,8 @@
     "socket.io": "^2.1.0",
     "srt-to-vtt": "^1.1.1",
     "winreg": "^1.2.0",
-    "zero-fill": "^2.2.3"
+    "zero-fill": "^2.2.3",
+    "uuid":"^3.2.1"
   },
   "devDependencies": {
     "buble": "^0.15.2",

@@ -83,7 +83,7 @@ const all = {
   asar: {
     // A glob expression, that unpacks the files with matching names to the
     // "app.asar.unpacked" directory.
-    unpack: 'WebTorrent*'
+    unpack: 'bedbug*'
   },
 
   // The build version of the application. Maps to the FileVersion metadata property on
