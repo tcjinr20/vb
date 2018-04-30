@@ -120,11 +120,11 @@ function init () {
 function delayedInit () {
   if (app.isQuitting) return
 
-  const announcement = require('./announcement')
-  const dock = require('./dock')
-  const updater = require('./updater')
-  announcement.init()
-  dock.init()
+  // const announcement = require('./announcement')
+  // const dock = require('./dock')
+  // const updater = require('./updater')
+  // announcement.init()
+  // dock.init()
 }
 
 function onAppOpen (newArgv) {

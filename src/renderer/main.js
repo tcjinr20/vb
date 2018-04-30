@@ -6,13 +6,30 @@ const webview = document.querySelector('webview')
 const hook = require('./lib/htmlhook')
 const path = require('path')
 const {ipcRenderer} = require('electron')
+const mousehook = require('./lib/mousehook')
 let inited = false
 webview.addEventListener('dom-ready', init)
 webview.addEventListener('did-navigate',function (e) {
     $('#weburl').val(e['url'])
+    e.propertyIsEnumerable()
+    e.preventDefault()
+    return false
+})
+// webview.addEventListener('will-navigate',function (e) {
+//     console.log(e)
+//     e.preventDefault()
+//     e.propertyIsEnumerable()
+//     return false
+// })
+webview.addEventListener('did-navigate-in-page',function (e,url) {
+    console.log(url)
+    e.propertyIsEnumerable()
+    e.preventDefault()
+    return false
 })
 webview.addEventListener('update-target-url',function (e) {
     $('#foot').text(e['url'])
+
 })
 
 ipcRenderer.on('toggleDevTools',function () {
@@ -24,7 +41,7 @@ ipcRenderer.on('toggleDevTools',function () {
 })
 
 webview.addEventListener('new-window', (e) => {
-    navigation(e['url'])
+    // navigation(e['url'])
 })
 
 function init (e) {
@@ -47,8 +64,20 @@ function init (e) {
   })
   hook.init(webview)
   $('#plugrefresh').click(walkplug)
-
+  $("#target").click(insertMouseHook)
   walkplug()
+}
+
+function insertMouseHook(){
+    mousehook.insert(webview)
+    // $(webview).click(function(e){
+    //     console.log(e)
+    // //     webview.inspectElement(e.clientX, e.clientY)
+    // })
+    // webview.addEventListener('mousedown',function(e){
+    //     console.log(e)
+    // })
+    // console.log(webview.getWebContents())
 }
 
 function walkplug () {
@@ -73,6 +102,7 @@ function walkplug () {
       var items ='';
       for (var i = 0; i < files.length; i++) {
         // $('#plugname').append("<option>"+path.parse(files[i])['name']+"</option>")
+          if(files[i]==='code.js')continue
         items += templete.replace(/{name}/g,path.parse(files[i])['name']).replace('{inum}',i)
       }
       $('#plugname').append(items)
