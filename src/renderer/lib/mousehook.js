@@ -1,29 +1,30 @@
 const config = require('../../config')
-
+var fs = require('fs')
 
 module.exports = {
-  insert: insert
+  insert: insert,
+  hook: hook
 }
 var webview = null
 function insert (view) {
   webview = view
-  var incode = 'fetch("http://127.0.0.1:' + config.LOCAL_HTTP_PORT + '/js/mousepick.js").then(resp =>resp.text()).then(back=>{eval(back)})'
-  console.log(incode)
+  var incode = 'var ser = "http://127.0.0.1:'+config.LOCAL_HTTP_PORT+'";fetch("http://127.0.0.1:' + config.LOCAL_HTTP_PORT + '/js/mouseinsert.js").then(resp =>resp.text()).then(back=>{eval(back)})'
   webview.executeJavaScript(incode, true, null)
-  // var uu= "<script src='http://127.0.0.1:"+ config.LOCAL_HTTP_PORT + "/js/mousepick.js'></script>";
-  // console.log(uu)
-  // webview.insertText(uu)
-  // webview.openDevTools()
 }
 
-function tick () {
-  var hook = ['textContent']
-  var incode = 'var pickattr = ' + JSON.dumps(hook) + ';var bb = null;fetch("http://127.0.0.1:' + config.LOCAL_HTTP_PORT + '/js/pickhook.js").then(resp =>{bb=resp; return resp.text()}).then(back=>{eval(back);bb["hook"]=hook;return bb;})'
-  webview.executeJavaScript(incode, true, function (e) {
-    if (e) {
+function hook () {
+  if(!webview) return
+  var incode = 'var bb = null;fetch("http://127.0.0.1:' + config.LOCAL_HTTP_PORT + '/js/pickhook.js").then(resp =>{bb=resp; return resp.text()}).then(back=>{eval(back);bb["hook"]=nodepick;return bb;})'
 
-    } else {
-      setTimeout(tick, 100)
+  webview.executeJavaScript(incode, true,function(e){
+    var script = 'var pack='+JSON.stringify(e['hook']['body'])+'';
+    var fn = e['hook']['name']
+    if(fn){
+      fs.writeFileSync(config.STATIC_PATH+"/plug/"+fn+".js",script);
+      alert("抓取完成")
+    }else{
+      alert('没有文件名，重新保存')
     }
+
   })
 }

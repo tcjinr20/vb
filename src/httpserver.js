@@ -1,23 +1,13 @@
 console.log('create http server')
-const http = require('http');
-const path = require('path');
-var fs=require("fs");
+
+
+var http=require('http');
+var path = require('path');
 var config = require('./config')
-
-http.createServer(function(req,res){
-
-    var pp=path.normalize(path.join(__dirname,'..','static',req.url))
-    if (fs.existsSync(pp)){
-        fs.readFile(pp,function(err,data){
-            if(err){
-                res.writeHead(404,{'Content-Type':'text/plain'})
-                res.end(err);
-            }else{
-                res.end(data.toString());
-            }
-        })
-    }else{
-        res.writeHead(404,{'Content-Type':'text/plain'})
-        res.end('the file is not find');
-    }
-}).listen(config.LOCAL_HTTP_PORT);
+var express = require('express');
+var app = express();
+var filePath = path.join(__dirname, '..', 'static')
+app.use("/", express.static(filePath));
+http.createServer(app).listen(config.LOCAL_HTTP_PORT, function() {
+  console.log('启动服务器完成');
+});

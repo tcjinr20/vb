@@ -9,11 +9,11 @@ const {ipcRenderer} = require('electron')
 const mousehook = require('./lib/mousehook')
 let inited = false
 webview.addEventListener('dom-ready', init)
-webview.addEventListener('did-navigate',function (e) {
-    $('#weburl').val(e['url'])
-    e.propertyIsEnumerable()
-    e.preventDefault()
-    return false
+webview.addEventListener('did-navigate', function (e) {
+  $('#weburl').val(e['url'])
+  e.propertyIsEnumerable()
+  e.preventDefault()
+  return false
 })
 // webview.addEventListener('will-navigate',function (e) {
 //     console.log(e)
@@ -21,27 +21,26 @@ webview.addEventListener('did-navigate',function (e) {
 //     e.propertyIsEnumerable()
 //     return false
 // })
-webview.addEventListener('did-navigate-in-page',function (e,url) {
-    console.log(url)
-    e.propertyIsEnumerable()
-    e.preventDefault()
-    return false
+webview.addEventListener('did-navigate-in-page', function (e, url) {
+  console.log(url)
+  e.propertyIsEnumerable()
+  e.preventDefault()
+  return false
 })
-webview.addEventListener('update-target-url',function (e) {
-    $('#foot').text(e['url'])
-
+webview.addEventListener('update-target-url', function (e) {
+  $('#foot').text(e['url'])
 })
 
-ipcRenderer.on('toggleDevTools',function () {
-    if (webview.isDevToolsOpened()) {
-        webview.closeDevTools()
-    } else {
-        webview.openDevTools({ detach: true })
-    }
+ipcRenderer.on('toggleDevTools', function () {
+  if (webview.isDevToolsOpened()) {
+    webview.closeDevTools()
+  } else {
+    webview.openDevTools({ detach: true })
+  }
 })
 
 webview.addEventListener('new-window', (e) => {
-    // navigation(e['url'])
+  // navigation(e['url'])
 })
 
 function init (e) {
@@ -64,22 +63,18 @@ function init (e) {
   })
   hook.init(webview)
   $('#plugrefresh').click(walkplug)
-  $("#target").click(insertMouseHook)
+  $('#target').click(insertMouseHook)
+  $("#gettarget").click(getMouseHook)
   walkplug()
 }
 
-function insertMouseHook(){
-    mousehook.insert(webview)
-    // $(webview).click(function(e){
-    //     console.log(e)
-    // //     webview.inspectElement(e.clientX, e.clientY)
-    // })
-    // webview.addEventListener('mousedown',function(e){
-    //     console.log(e)
-    // })
-    // console.log(webview.getWebContents())
+function insertMouseHook () {
+  mousehook.insert(webview)
 }
 
+function getMouseHook(){
+  mousehook.hook()
+}
 function walkplug () {
   var templete = '<tr>\n' +
       '                            <td>{name}</td>\n' +
@@ -99,29 +94,28 @@ function walkplug () {
   $('#plugname').empty()
   fs.readdir(config.PLUG_PATH, function (err, files) {
     if (!err) {
-      var items ='';
+      var items = ''
       for (var i = 0; i < files.length; i++) {
         // $('#plugname').append("<option>"+path.parse(files[i])['name']+"</option>")
-          if(files[i]==='code.js')continue
-        items += templete.replace(/{name}/g,path.parse(files[i])['name']).replace('{inum}',i)
+        if (files[i] === 'code.js') continue
+        items += templete.replace(/{name}/g, path.parse(files[i])['name']).replace('{inum}', i)
       }
       $('#plugname').append(items)
       $('.plugstart').click(function (e) {
         $(e.currentTarget).hide()
         var nn = $(e.currentTarget).data('name')
-        $(".plugstop[data-name="+nn+"]").show()
+        $('.plugstop[data-name=' + nn + ']').show()
         hook.setplug(nn)
       })
-        $('.plugrefresh').click(function (e) {
-            $(e.currentTarget).hide()
-            var nn = $(e.currentTarget).data('name')
-            $(".plugstop[data-name="+nn+"]").show()
-            hook.reRun(nn)
-        })
+      $('.plugrefresh').click(function (e) {
+        $(e.currentTarget).hide()
+        var nn = $(e.currentTarget).data('name')
+        $('.plugstop[data-name=' + nn + ']').show()
+        hook.reRun(nn)
+      })
     }
   })
 }
-
 
 function navigation (url) {
   $('webview').attr({'src': url, 'useragent': config.USER_AGENT.andriod, 'httpreferrer': 'https://www.baidu.com'})
