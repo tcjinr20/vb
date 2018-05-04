@@ -19,6 +19,10 @@ Code.prototype.hookcode = function () {
         return {'code':0}
     }
 }
+
+Code.prototype.hookover = function(){
+
+}
 // 1
 Code.prototype.hookhtml = function(html){
     if(backlist[ele['uuid']]){
