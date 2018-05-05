@@ -47,10 +47,19 @@ function init (options) {
     x: initialBounds.x,
     y: initialBounds.y
   })
-
+    // var catchv = new electron.BrowserView()
+    // catchv.setBounds({ x: 0, y: 0, width: 300, height: 300 })
+    // catchv.webContents.loadURL(config.WINDOW_CATCH)
+    // win.setBrowserView(catchv)
+    // var mainv = new electron.BrowserView()
+    // mainv.setBounds({ x: 300, y: 300, width: 300, height: 300 })
+    // mainv.webContents.loadURL(config.WINDOW_MAIN)
+    // win.setBrowserView(mainv)
   win.loadURL(config.WINDOW_MAIN,{ userAgent: config.USER_AGENT['andriod']})
+
   win.once('ready-to-show', () =>{
     if (!options.hidden) win.show()
+
   })
 
   if (win.setSheetOffset) {
@@ -101,6 +110,11 @@ function init (options) {
 
 
 function goCatch(){
+    if(main.catchvideo){
+        if(main.catchvideo.isVisible())return
+        else main.catchvideo.show()
+        return
+    }
     const initialBounds = config.WINDOW_INITIAL_BOUNDS
     const catchvideo = main.catchvideo = new electron.BrowserWindow({
         backgroundColor: '#282828',
@@ -116,10 +130,12 @@ function goCatch(){
         useContentSize: true, // Specify web page size without OS chrome
         width: initialBounds.width,
         x: initialBounds.x,
-        y: initialBounds.y
+        y: initialBounds.y,
+        parent:main.win,
+        modal:true
     })
     catchvideo.loadURL(config.WINDOW_CATCH,{ userAgent: config.USER_AGENT['andriod']})
-    // catchvideo.openDevTools()
+    catchvideo.openDevTools()
 }
 
 function dispatch (...args) {

@@ -181,7 +181,7 @@ function init () {
    */
 
   const main = windows.main
-
+    ipc.on('showcatch',()=>main.goCatch())
   ipc.on('setAspectRatio', (e, ...args) => main.setAspectRatio(...args))
   ipc.on('setBounds', (e, ...args) => main.setBounds(...args))
   ipc.on('setProgress', (e, ...args) => main.setProgress(...args))
@@ -189,7 +189,6 @@ function init () {
   ipc.on('show', () => main.show())
   ipc.on('toggleFullScreen', (e, ...args) => main.toggleFullScreen(...args))
   ipc.on('setAllowNav', (e, ...args) => menu.setAllowNav(...args))
-  ipc.on('start_socket',()=>main.openSocket())
   /**
    * External Media Player
    */

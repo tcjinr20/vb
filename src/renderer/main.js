@@ -76,7 +76,12 @@ function init (e) {
   $('#plugrefresh').click(walkplug)
   $('#target').click(insertMouseHook)
   $("#gettarget").click(getMouseHook)
+    $("#showcatch").click(showcatch)
   walkplug()
+}
+
+function showcatch() {
+    ipcRenderer.send("showcatch")
 }
 
 function insertMouseHook () {
