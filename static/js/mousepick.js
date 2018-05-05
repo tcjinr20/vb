@@ -46,6 +46,7 @@ function LayC () {
       })
 
       window.nodepick = {'name':val,'body':resu}
+      console.log(nodepick)
     });
 
   }
@@ -72,9 +73,10 @@ function LayC () {
     if (t.id) {
       return t.id
     } else {
-      return t.nodeName + '.' + t.classList
+      return t.nodeName + '.' + t.classList.toString().split(' ').join('.')
     }
   }
+
 }
 
 function MouseAction (back) {

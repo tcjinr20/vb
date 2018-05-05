@@ -49,14 +49,26 @@ function init (e) {
     $('#leftpanel').toggle()
   })
 
-  $('#forwark').click(function (e) {
-    navigation($('#weburl').val())
+  $("#goback").click(function () {
+    if(webview.canGoBack()){
+      webview.goBack()
+    }
   })
+
+  $('#forwark').click(function (e) {
+    if(webview.canGoForward()){
+      webview.goForward()
+    }else{
+      navigation($('#weburl').val())
+    }
+  })
+
   $('#weburl').keypress(function (e) {
     if (e.keyCode == 13) {
       navigation($('#weburl').val())
     }
   })
+
   $('#refresh').click(function () {
     webview.reload()
   })
