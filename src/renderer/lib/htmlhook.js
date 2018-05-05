@@ -47,6 +47,7 @@ function run () {
         case 0:
           isruning = false
           clearInterval(clearid)
+          pluginstance.hookover()
           $('.plugstop[data-name=' + plug + ']').hide()
           $('.plugstart[data-name=' + plug + ']').hide()
           $('.plugrefresh[data-name=' + plug + ']').show()
@@ -62,7 +63,6 @@ function run () {
           break
         case 4:
           clearInterval(clearid)
-          pluginstance.hookover()
           navigate(pa['url'], pa['uuid'])
           break
       }
@@ -101,6 +101,7 @@ function setplug (plugname, code) {
 
 function navigate (url) {
   // webview.src=url
+
   webview.loadURL(url)
 }
 

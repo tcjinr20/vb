@@ -11,13 +11,17 @@ Code.prototype.init = function () {
 }
 //一直循环获取，除非返回false||0
 Code.prototype.hookcode = function () {
-
-    if(this.__hold>0 && this.__codelist.length>0 && this.__codelist[0]['code']==-1){
-        return {'code':-1}
-    }
     if(this.__codelist.length>0)
-        return this.__codelist.shift()
-    else {
+    {
+      if(this.__codelist[0]['code']==-1)return {'code':-1}
+      if(this.__codelist[0]['code']==-2){
+        this.__codelist[0]['param']--;
+        if(this.__codelist[0]['param']>0){
+          return {'code':-1}
+        }
+      }
+      return this.__codelist.shift()
+    }else {
         return {'code':0}
     }
 }
@@ -63,11 +67,18 @@ Code.prototype.addCode = function(code,param,back){
 
 Code.prototype.sleep=function () {
     this.addCode(-1)
-    this.__hold ++;
+}
+Code.prototype.wait = function(m){
+    this.addCode(-2,parseInt(m/100))
 }
 
 Code.prototype.goon=function () {
-    this.__hold--;
+    for (var i=0;i<this.__codelist.length;i++){
+        if(this.__codelist[i]['code']==-1){
+          this.__codelist.splice(i,1)
+          break;
+        }
+    }
 }
 
 Code.prototype.end = function () {

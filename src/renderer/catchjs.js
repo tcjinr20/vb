@@ -2,7 +2,7 @@ $= require("jquery")
 const config = require('../config')
 const path = require('path')
 // var ser = 'http://www.op.com/';
-   var ser = 'http://basezhushou.cn/';
+var ser = 'http://basezhushou.cn/';
 var plug = null;
 var task = [];
 
