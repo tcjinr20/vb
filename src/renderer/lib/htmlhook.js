@@ -28,6 +28,7 @@ function init (web, plugname) {
 }
 
 function onReady () {
+    console.log('ready',isruning)
   if (isruning) {
     run()
   }

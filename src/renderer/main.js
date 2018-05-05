@@ -79,7 +79,7 @@ function init (e) {
     $("#showcatch").click(showcatch)
   walkplug()
 }
-
+init()
 function showcatch() {
     ipcRenderer.send("showcatch")
 }

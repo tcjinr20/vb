@@ -26,7 +26,7 @@ module.exports = {
   SOCKET_PORT: 4324,
   LOCAL_HTTP_PORT:4544,
   PLUG_PATH:path.join(__dirname, '..', 'static', 'plug'),
-  WEBVIEW_SRC: 'http://www.btbtdy.com/',
+  WEBVIEW_SRC: 'about:blank',
   APP_COPYRIGHT: 'Copyright © 2014-2018 ' + APP_TEAM,
   APP_FILE_ICON: path.join(__dirname, '..', 'static', 'bedbugFile'),
   APP_ICON: path.join(__dirname, '..', 'static', 'bedbug'),

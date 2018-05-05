@@ -6,15 +6,17 @@ var Code=module.exports = function Code(dis){
 }
 var backlist ={};
 Code.prototype.init = function () {
-    this.codelist = []
+    this.__codelist = []
+    this.__hold = 0;
 }
 //一直循环获取，除非返回false||0
 Code.prototype.hookcode = function () {
-    if(this.hold){
+
+    if(this.__hold>0 && this.__codelist.length>0 && this.__codelist[0]['code']==-1){
         return {'code':-1}
     }
-    if(this.codelist.length>0)
-        return this.codelist.shift()
+    if(this.__codelist.length>0)
+        return this.__codelist.shift()
     else {
         return {'code':0}
     }
@@ -54,17 +56,18 @@ Code.prototype.addCode = function(code,param,back){
     p['code']=code;
     if(param)p['param']=param
     p['uuid']=UUID()
-    this.codelist.push(p)
+    this.__codelist.push(p)
     if(back)backlist[p['uuid']]=back
     return p['uuid']
 }
 
 Code.prototype.sleep=function () {
-    this.hold = true
+    this.addCode(-1)
+    this.__hold ++;
 }
 
 Code.prototype.goon=function () {
-    this.hold =false
+    this.__hold--;
 }
 
 Code.prototype.end = function () {
@@ -80,9 +83,9 @@ Code.prototype.addValcode = function (pa,back) {
 }
 
 Code.prototype.addHtmlcode = function () {
-    this.codelist.push({'code':1})
+    this.__codelist.push({'code':1})
 }
 Code.prototype.addURLcode = function (url) {
-    this.codelist.push({'code':4, 'url':url})
+    this.__codelist.push({'code':4, 'url':url})
 }
 

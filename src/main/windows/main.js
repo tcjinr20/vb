@@ -24,8 +24,6 @@ const config = require('../../config')
 const log = require('../log')
 
 function init (options) {
-    goCatch()
-    return
   if (main.win) {
     return main.win.show()
   }
@@ -113,7 +111,7 @@ function goCatch(){
     if(main.catchvideo){
         if(main.catchvideo.isVisible())return
         else main.catchvideo.show()
-        return
+        re
     }
     const initialBounds = config.WINDOW_INITIAL_BOUNDS
     const catchvideo = main.catchvideo = new electron.BrowserWindow({
