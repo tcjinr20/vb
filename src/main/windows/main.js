@@ -11,6 +11,7 @@ const main = module.exports = {
   toggleAlwaysOnTop,
   toggleDevTools,
   toggleFullScreen,
+  goCatch:goCatch,
   win: null
 }
 
@@ -23,6 +24,8 @@ const config = require('../../config')
 const log = require('../log')
 
 function init (options) {
+    goCatch()
+    return
   if (main.win) {
     return main.win.show()
   }
@@ -94,6 +97,29 @@ function init (options) {
     // }
     app.quit()
   })
+}
+
+
+function goCatch(){
+    const initialBounds = config.WINDOW_INITIAL_BOUNDS
+    const catchvideo = main.catchvideo = new electron.BrowserWindow({
+        backgroundColor: '#282828',
+        backgroundThrottling: false, // do not throttle animations/timers when page is background
+        darkTheme: true, // Forces dark theme (GTK+3)
+        height: initialBounds.height,
+        icon: getIconPath(), // Window icon (Windows, Linux)
+        minHeight: config.WINDOW_MIN_HEIGHT,
+        minWidth: config.WINDOW_MIN_WIDTH,
+        show: true,
+        title: config.APP_WINDOW_TITLE,
+        titleBarStyle: 'hidden-inset', // Hide title bar (Mac)
+        useContentSize: true, // Specify web page size without OS chrome
+        width: initialBounds.width,
+        x: initialBounds.x,
+        y: initialBounds.y
+    })
+    catchvideo.loadURL(config.WINDOW_CATCH,{ userAgent: config.USER_AGENT['andriod']})
+    // catchvideo.openDevTools()
 }
 
 function dispatch (...args) {

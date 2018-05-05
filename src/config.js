@@ -61,7 +61,7 @@ module.exports = {
 
   WINDOW_ABOUT: 'file://' + path.join(__dirname, '..', 'static', 'about.html'),
   WINDOW_MAIN: 'file://' + path.join(__dirname, '..', 'static', 'main.html'),
-  WINDOW_WEBTORRENT: 'file://' + path.join(__dirname, '..', 'static', 'chouchong.html'),
+  WINDOW_CATCH: 'file://' + path.join(__dirname, '..', 'static', 'catch.html'),
 
   WINDOW_INITIAL_BOUNDS: {
     width: 500,

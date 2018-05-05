@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>3CCC</title>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/photon.css">
+    <!-- Javascript -->
+    <script src="js/menu.js" charset="utf-8"></script>
+</head>
+<body class="window">
+<div class="form-group">
+    <label>网址</label>
+    <input type="text" class="form-control" placeholder="url" id="urlt">
+    <select class="form-control">
+        <option value="btbtby">btbtby</option>
+    </select>
+    <button class="btn btn-default">catch</button>
+</div>
+<div class="form-group">
+    <select class="form-control" id="cid">
+        <option value="0">无</option>
+        <option value="3">动漫</option>
+        <option value="2">电视剧</option>
+        <option value="1">电影</option>
+        <option value="4">短视频</option>
+    </select>
+    <a class="btn btn-default" id="public">发布</a>
+</div>
+<div style="display: none" id="temp">
+
+</div>
+
+<table class="table-striped">
+    <thead>
+    <tr>
+        <th>片名</th>
+        <th>pic</th>
+        <th>File</th>
+    </tr>
+    </thead>
+    <tbody id="itembody">
+
+    </tbody>
+</table>
+<script>
+    var ser = 'http://wwwop.com/';
+//    var ser = 'http://basezhushou.cn/';
+    var plug = null;
+    function url(p){
+        return p;
+    }
+    $= require("jquery")
+    $('button').click(function(){
+        plug = new btbtby()
+    })
+
+    $('#public').click(function () {
+        if(plug){
+            plug.post()
+        }
+    })
+
+    function btbtby(){
+        var self = this;
+        var jishu =[]
+        self.img = '';
+        self.file =[];
+        $.get($("#urlt").val(),{},function(e){
+            self.img =eval($(e).find('.pic').css('background-image'))
+            var pps = $(e).find('.text p')
+            self.name =pps.get(0).textContent
+            self.ator = pps.get(1).textContent.replace("主演：",'')
+            $(e).find('.playlist1 li').each(function (i,e) {
+                jishu[i]='http://m.btbtdy.com'+$(e).find('a').attr('href')
+            })
+
+            for (var i=0;i<jishu.length;i++){
+                giframe(jishu[i])
+            }
+        })
+
+        function giframe(url) {
+            var iframe = []
+            $.get(url,{},function(e){
+                var ur=$(e).find('iframe').attr('src')
+                self.file.push(ur)
+                if(self.file.length==jishu.length){
+                    pushitem();
+                }
+            })
+        }
+        
+        function pushitem() {
+            var item =' <tr>\
+                <td>$name$</td>\
+                <td><img height="100" src="$pic$"></td>\
+                <td>$file$</td>\
+            </tr>'
+
+            var urls = '';
+            for (var o=0; o<self.file.length;o++){
+                urls+=o+"$"+self.file[0]+"<br/>";
+            }
+            var oo= self.name+"<br/>"+self.ator;
+            item=item.replace('$name$',oo).replace('$pic$',self.img).replace('$file$',urls)
+            $("#itembody").append(item)
+        }
+        
+        self.post= function () {
+            var uu = '';
+            for (var i = 0;i<plug.file.length;i++){
+                uu+=(i+1)+"$"+plug.file[i]+"\n";
+            }
+            var obj = {'u':[uu], 'n':plug.name, 'a':plug.ator, 'i':plug.img}
+            obj['c']=$("#cid").val();
+            obj['XDEBUG_SESSION_START']='15523';
+            if(obj['c']==0){
+                alert('没有分类')
+                return
+            }
+            $.post(ser+'?c=api&m=btbtby',obj,function (e) {
+
+                alert('发布成功')
+                location.reload()
+
+            })
+        }
+    }
+
+</script>
+</body>
+</html>

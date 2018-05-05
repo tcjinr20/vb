@@ -84,20 +84,29 @@ function getNewMenuTemplate () {
     {
         label: 'View',
             submenu: [
-        {
-            label: 'Dev Tools',
-            accelerator: process.platform === 'darwin'
-                ? 'Alt+Command+I'
-                : 'Ctrl+Shift+I',
-            click: () => windows.main.toggleDevTools()
-        },{
-            label: 'Web Tools',
-            accelerator: process.platform === 'darwin'
-                ? 'Alt+Command+O'
-                : 'Ctrl+Shift+O',
-            click: () => windows.main.send('toggleDevTools')
-}
-    ]
+                {
+                    label: 'Dev Tools',
+                    accelerator: process.platform === 'darwin'
+                        ? 'Alt+Command+I'
+                        : 'Ctrl+Shift+I',
+                    click: () => windows.main.toggleDevTools()
+                },{
+                    label: 'Web Tools',
+                    accelerator: process.platform === 'darwin'
+                        ? 'Alt+Command+O'
+                        : 'Ctrl+Shift+O',
+                    click: () => windows.main.send('toggleDevTools')
+                }
+            ]
+    },{
+        label:'tool',
+        submenu:[
+            {
+            label:"catch Video",
+            accelerator: process.platform === 'darwin' ? 'Alt+Command+V' : 'Ctrl+Shift+V',
+            click: () => windows.main.goCatch()
+            }
+            ]
     }
 ]
     return template

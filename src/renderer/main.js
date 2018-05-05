@@ -22,7 +22,6 @@ webview.addEventListener('did-navigate', function (e) {
 //     return false
 // })
 webview.addEventListener('did-navigate-in-page', function (e, url) {
-  console.log(url)
   e.propertyIsEnumerable()
   e.preventDefault()
   return false
@@ -40,7 +39,7 @@ ipcRenderer.on('toggleDevTools', function () {
 })
 
 webview.addEventListener('new-window', (e) => {
-  // navigation(e['url'])
+  navigation(e['url'])
 })
 
 function init (e) {
