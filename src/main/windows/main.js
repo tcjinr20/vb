@@ -108,11 +108,6 @@ function init (options) {
 
 
 function goCatch(){
-    if(main.catchvideo){
-        if(main.catchvideo.isVisible())return
-        else main.catchvideo.show()
-        re
-    }
     const initialBounds = config.WINDOW_INITIAL_BOUNDS
     const catchvideo = main.catchvideo = new electron.BrowserWindow({
         backgroundColor: '#282828',

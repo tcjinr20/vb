@@ -5,7 +5,8 @@ module.exports = {
   getVal: getVal,
   getElement: getElement,
   setplug: setplug,
-  reRun: reRun
+  reRun: reRun,
+  run:run
 }
 
 const config = require('../../config')
@@ -71,6 +72,7 @@ function run () {
       pluginstance.hookover()
     }
   }, 100)
+    return pluginstance
 }
 
 function reRun (plugname) {
@@ -78,6 +80,7 @@ function reRun (plugname) {
     pluginstance = null
     setplug(plugname)
   }
+
 }
 
 function setplug (plugname, code) {
@@ -101,8 +104,7 @@ function setplug (plugname, code) {
 
 function navigate (url) {
   // webview.src=url
-
-  webview.loadURL(url)
+    webview.loadURL(url,{ userAgent: config.USER_AGENT['andriod']})
 }
 
 function getHtml () {

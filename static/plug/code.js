@@ -100,3 +100,6 @@ Code.prototype.addURLcode = function (url) {
     this.__codelist.push({'code':4, 'url':url})
 }
 
+Code.prototype.insertTask = function () {
+    
+}

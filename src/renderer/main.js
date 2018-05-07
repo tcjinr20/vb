@@ -21,11 +21,11 @@ webview.addEventListener('did-navigate', function (e) {
 //     e.propertyIsEnumerable()
 //     return false
 // })
-webview.addEventListener('did-navigate-in-page', function (e, url) {
-  e.propertyIsEnumerable()
-  e.preventDefault()
-  return false
-})
+// webview.addEventListener('did-navigate-in-page', function (e, url) {
+//   e.propertyIsEnumerable()
+//   e.preventDefault()
+//   return false
+// })
 webview.addEventListener('update-target-url', function (e) {
   $('#foot').text(e['url'])
 })
