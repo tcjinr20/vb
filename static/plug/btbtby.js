@@ -1,10 +1,9 @@
 $= require("jquery")
 var util = require('util')
 var Code = require('./code')
-
+// var serurl = 'http://basezhushou.cn/?c=api&m=btbtby';
+var serurl = 'http://www.op.com/?c=api&m=btbtby';
 var btbty = module.exports=function (){
-    this.param = {};
-    this.param['url']=[]
     this.init()
     this.sleep()
 }
@@ -23,17 +22,18 @@ btbty.prototype.giframe=function () {
     var iframe = []
     var self = this;
     if(self.jishu.length>0){
-
         $.get(self.jishu[0],{},function(e){
             var ur=$(e).find('iframe').attr('src')
-            self.param['url'].push(ur)
             self.jishu.shift()
             self.goon()
             self.addURLcode(ur)
-            self.wait(1000)
-            self.addElecode({'label':'video','attr':'arc'},function (e) {
+            // self.wait(1000)
+            self.addElecode({'label':'video'},function (e) {
                 console.log(e)
+                // self.param['url'].push($(e).attr('src'));
+                // self.giframe()
             })
+            self.sleep()
         })
     }else {
         self.post()
@@ -44,7 +44,8 @@ btbty.prototype.post=function (){
     self.param['source']=self.task['url'];
     self.param['player']=self.task['pid'];
     self.param['cid']=self.task['cid'];
-    $.post(self.serurl,self.param,function (e) {
+    console.log('post',self.param)
+    $.post(serurl,self.param,function (e) {
         self.task['param']=self.param
         if(self.back)self.back.call(null,self.task)
     })
@@ -54,6 +55,8 @@ btbty.prototype.start = function (task) {
     self=this;
     self.back = task['back'];
     self.task = task;
+    self.param =[]
+    self.param['url']=[];
     self.jishu=[]
 
     $.get(task['url'],{},function(e){
@@ -67,7 +70,7 @@ btbty.prototype.start = function (task) {
         $(e).find('.playlist1 li').each(function (i,e) {
             self.jishu[i]='http://m.btbtdy.com'+$(e).find('a').attr('href')
         })
-
+        console.log('jishu',self.jishu)
         if(self.jishu.length>0)
             self.giframe()
         else{

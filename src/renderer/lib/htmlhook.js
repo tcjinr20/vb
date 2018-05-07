@@ -19,6 +19,7 @@ const elepack = {'src': 'plugmeta/ele.js', 'back': praseEle, 'name': 'ele'}
 let plug = 'video'
 let webview
 let pluginstance
+let plugclass;
 let isruning = false
 var clearid = 0
 
@@ -72,7 +73,7 @@ function run () {
       pluginstance.hookover()
     }
   }, 100)
-    return pluginstance
+    return [pluginstance,plugclass]
 }
 
 function reRun (plugname) {
@@ -93,7 +94,7 @@ function setplug (plugname, code) {
     return
   }
   plug = plugname
-  var plugclass = require(path.join(config.PLUG_PATH, plug))
+  plugclass = require(path.join(config.PLUG_PATH, plug))
   if (plugclass == null) {
     console.log(plug + ' not find')
     return
