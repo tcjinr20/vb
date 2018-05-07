@@ -73,7 +73,7 @@ function run () {
       pluginstance.hookover()
     }
   }, 100)
-    return [pluginstance,plugclass]
+    return pluginstance
 }
 
 function reRun (plugname) {

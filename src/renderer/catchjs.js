@@ -31,6 +31,7 @@ $('#public').click(function () {
 
     if(pluginst==null)
         pluginst = webtag.hook($("#plugn").val()).run();
+        console.log(pluginst)
     addtask(t)
 })
 
