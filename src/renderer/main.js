@@ -134,7 +134,7 @@ function walkplug () {
 }
 
 function navigation (url) {
-  $('webview').attr({'src': url, 'useragent': config.USER_AGENT.andriod, 'httpreferrer': 'https://www.baidu.com'})
+  $('webview').attr({'src': url, 'useragent': config.CURRENT_USER_AGENT, 'httpreferrer': 'https://www.baidu.com'})
   $('#weburl').val(url)
 }
 

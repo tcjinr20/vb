@@ -17,7 +17,10 @@ const IS_PORTABLE = isPortable()
 const UI_HEADER_HEIGHT = 38
 const UI_TORRENT_HEIGHT = 100
 const WEB_HOST = "http://www.basezhushou.com"
-
+const USER_AGENT= {
+  andriod: 'Mozilla/5.0 (Linux; U; Android 7.0; zh-cn; STF-AL00 Build/HUAWEISTF-AL00) AppleWebKit/537.36 (KHTML, like Gecko)Version/4.0 Chrome/37.0.0.0 MQQBrowser/7.9 Mobile Safari/537.36',
+  iPhone: 'Mozilla/5.0 (iPhone 84; CPU iPhone OS 10_3_3 like Mac OS X) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.0 MQQBrowser/7.8.0 Mobile/14G60 Safari/8536.25 MttCustomUA/2 QBWebViewType/1 WKType/1'
+}
 module.exports = {
   ANNOUNCEMENT_URL: WEB_HOST+'/announcement',
   AUTO_UPDATE_URL: WEB_HOST+'/update',
@@ -72,10 +75,7 @@ module.exports = {
 
   UI_HEADER_HEIGHT: UI_HEADER_HEIGHT,
   UI_TORRENT_HEIGHT: UI_TORRENT_HEIGHT,
-  USER_AGENT: {
-    andriod: 'Mozilla/5.0 (Linux; U; Android 7.0; zh-cn; STF-AL00 Build/HUAWEISTF-AL00) AppleWebKit/537.36 (KHTML, like Gecko)Version/4.0 Chrome/37.0.0.0 MQQBrowser/7.9 Mobile Safari/537.36',
-    iPhone: 'Mozilla/5.0 (iPhone 84; CPU iPhone OS 10_3_3 like Mac OS X) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.0 MQQBrowser/7.8.0 Mobile/14G60 Safari/8536.25 MttCustomUA/2 QBWebViewType/1 WKType/1'
-  }
+  CURRENT_USER_AGENT:USER_AGENT.andriod
 }
 
 function getConfigPath () {

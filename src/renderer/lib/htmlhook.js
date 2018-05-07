@@ -6,7 +6,9 @@ module.exports = {
   getElement: getElement,
   setplug: setplug,
   reRun: reRun,
-  run:run
+  start: start,
+  getPlugClass: getPlugClass,
+  getPlug: getPlug
 }
 
 const config = require('../../config')
@@ -16,10 +18,10 @@ const htmlpack = {'src': 'plugmeta/html.js', 'back': praseHtml, 'name': 'html'}
 const valpack = {'src': 'plugmeta/val.js', 'back': praseVal, 'name': 'val'}
 const elepack = {'src': 'plugmeta/ele.js', 'back': praseEle, 'name': 'ele'}
 
-let plug = 'video'
+let plug = ''
 let webview
 let pluginstance
-let plugclass;
+let plugclass
 let isruning = false
 var clearid = 0
 
@@ -30,7 +32,7 @@ function init (web, plugname) {
 }
 
 function onReady () {
-    console.log('ready',isruning)
+  console.log('ready', isruning)
   if (isruning) {
     run()
   }
@@ -38,6 +40,7 @@ function onReady () {
 
 function stop () {
   clearInterval(clearid)
+  isruning = false
 }
 
 function run () {
@@ -73,7 +76,21 @@ function run () {
       pluginstance.hookover()
     }
   }, 100)
-    return pluginstance
+}
+
+function getPlugClass(){
+  return plugclass
+}
+
+function getPlug(){
+  return pluginstance
+}
+
+function start () {
+  if (!isruning) {
+    run()
+  }
+  return pluginstance
 }
 
 function reRun (plugname) {
@@ -81,12 +98,12 @@ function reRun (plugname) {
     pluginstance = null
     setplug(plugname)
   }
-
+  return pluginstance
 }
-
+//每次生成一个实例
 function setplug (plugname, code) {
-  if (pluginstance) {
-    console.log('不支持多任务')
+  if (plug && plugname !== plug) {
+    console.log('不多插件')
     return
   }
   if (pluginstance && code == 'stop') {
@@ -94,18 +111,20 @@ function setplug (plugname, code) {
     return
   }
   plug = plugname
-  plugclass = require(path.join(config.PLUG_PATH, plug))
+  if (plugclass == null) { plugclass = require(path.join(config.PLUG_PATH, plug)) }
   if (plugclass == null) {
     console.log(plug + ' not find')
     return
   }
   pluginstance = new plugclass(jquery)
-  run()
+  start()
+  return pluginstance
 }
 
 function navigate (url) {
   // webview.src=url
-    webview.loadURL(url,{ userAgent: config.USER_AGENT['andriod']})
+  webview.clearHistory()
+  webview.loadURL(url, { userAgent: config.CURRENT_USER_AGENT,})
 }
 
 function getHtml () {
@@ -135,13 +154,13 @@ function insertScript (script, param, uuid) {
 }
 
 function praseHtml (dom) {
-  if (pluginstance['hookhtml'])pluginstance['hookhtml'].call(pluginstance, dom['html'],dom['uuid'])
+  if (pluginstance['hookhtml'])pluginstance['hookhtml'].call(pluginstance, dom['html'], dom['uuid'])
 }
 
 function praseVal (dom) {
-  if (pluginstance['hookval'])pluginstance['hookval'].call(pluginstance, dom['val'],dom['uuid'])
+  if (pluginstance['hookval'])pluginstance['hookval'].call(pluginstance, dom['val'], dom['uuid'])
 }
 
 function praseEle (dom) {
-  if (pluginstance['hookele'])pluginstance['hookele'].call(pluginstance, dom['ele'],dom['uuid'])
+  if (pluginstance['hookele'])pluginstance['hookele'].call(pluginstance, dom['ele'], dom['uuid'])
 }

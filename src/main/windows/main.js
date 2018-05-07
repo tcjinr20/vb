@@ -53,7 +53,7 @@ function init (options) {
     // mainv.setBounds({ x: 300, y: 300, width: 300, height: 300 })
     // mainv.webContents.loadURL(config.WINDOW_MAIN)
     // win.setBrowserView(mainv)
-  win.loadURL(config.WINDOW_MAIN,{ userAgent: config.USER_AGENT['andriod']})
+  win.loadURL(config.WINDOW_MAIN,{ userAgent: config.CURRENT_USER_AGENT})
 
   win.once('ready-to-show', () =>{
     if (!options.hidden) win.show()
@@ -127,7 +127,7 @@ function goCatch(){
         parent:main.win,
         modal:true
     })
-    catchvideo.loadURL(config.WINDOW_CATCH,{ userAgent: config.USER_AGENT['andriod']})
+    catchvideo.loadURL(config.WINDOW_CATCH,{ userAgent: config.CURRENT_USER_AGENT})
     catchvideo.openDevTools()
 }
 
