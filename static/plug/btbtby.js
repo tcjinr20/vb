@@ -1,8 +1,10 @@
 const $ = require('jquery')
 var util = require('util')
 var Code = require('./code')
-var serurl = 'http://basezhushou.cn/?c=api&m=btbtby';
-// var serurl = 'http://www.op.com/?c=api&m=btbtby';
+var fs = require('fs')
+var path = require('path')
+// var serurl = 'http://basezhushou.cn/?c=api&m=btbtby';
+var serurl = 'http://www.op.com/?c=api&m=btbtby';
 var btbty = module.exports = function () {
   this.init()
   this.sleep()
@@ -66,21 +68,47 @@ btbty.prototype.post = function () {
   sp['img'] = self.param['img']
   sp['ator'] = self.param['ator']
   sp['url'] = self.param['url']
-  console.log(sp)
+
   try{
-    $.post(serurl, sp, function (e) {
-      if (e == 1) {
-        self.task['param'] = self.param
-        if (self.back)self.back.call(null, self.task)
-      } else {
-        console.log(e)
-      }
-      nexttask()
-    },'json')
+      $.ajax(serurl,{data:sp,dataType:'json',success:function (e) {
+          if (e == 1) {
+              self.task['param'] = self.param
+              if (self.back)self.back.call(null, self.task)
+          } else {
+              console.log(e)
+          }
+          nexttask()
+      },error:function (e) {
+          self.task['param'] = self.param
+          if (self.back)self.back.call(null, self.task)
+          savelocal(sp)
+          nexttask()
+      }})
+    // $.post(serurl, sp, function (e) {
+    //   if (e == 1) {
+    //     self.task['param'] = self.param
+    //     if (self.back)self.back.call(null, self.task)
+    //   } else {
+    //     console.log(e)
+    //   }
+    //   nexttask()
+    // },'json')
   }catch (e) {
     throw (e)
   }
 
+}
+
+function savelocal(t){
+    var date = new Date()
+    var time=date.getFullYear()+'-'+date.getMonth()+"-"+date.getDay();
+    if(!fs.existsSync('./'+time)){
+        fs.mkdirSync('./'+time)
+    }
+    var fn= path.join('./',time,time+'.txt')
+    fs.writeFile(fn,JSON.stringify(t)+"\n",{ 'flag': 'a' },function () {
+        
+    })
 }
 
 btbty.prototype.start = function (task) {
