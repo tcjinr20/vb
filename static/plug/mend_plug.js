@@ -1,25 +1,26 @@
 var util = require('util')
 var Code = require('./code')
 const fs = require('fs')
+const $ = require('jquery')
 var Mend = module.exports =function (jquery) {
-  $ = jquery
   this.init()
   this.sleep();
   this.jis =[]
   this.getp()
 }
 var server = "http://basezhushou.cn/?c=api&m=vod";
-var $id = 17;
+var $id = 90;
 Mend.prototype.getp = function (){
   var self = this;
-  $.getJSON(server,{'id':$id},function (e) {
-    console.log(e)
+    self.jis=[]
+    console.log($id)
+  $.post(server,{'id':$id},function (e) {
     var url = e['url'].split('###')
     if(!e['id']){
       console.log('over')
       return;
     }
-    $id =e['id']
+    if(parseInt(e['id'])>$id)$id=parseInt(e['id'])
     if(url[0]=='XX'){
       var arr= url[1].split('\n')
       for(var i=0;i<arr.length;i++){
@@ -28,25 +29,33 @@ Mend.prototype.getp = function (){
       self.getVideo()
     }else{
       $id++;
-      console.log('id='+$id)
       self.getp()
     }
-  })
+  },'json')
 
 }
 var videos=[]
 Mend.prototype.getVideo=function (){
+    console.log('getVideo')
   var self =this;
+    console.log(self.jis[0])
   if(self.jis.length>0){
       self.goon()
-      self.addURLcode(self.jis[0][1])
-      self.wait(1000);
-      self.addElecode({'label':'video'},function (e) {
-        videos.push([self.jis[0][0],$(e).attr('src')])
-        self.jis.shift()
-        self.getVideo()
-      })
+      if(self.jis[0][1]){
+          self.addURLcode(self.jis[0][1])
+          self.wait(1000);
+          self.addElecode({'label':'video'},function (e) {
+              videos.push([self.jis[0][0],$(e).attr('src')])
+              self.jis.shift()
+              self.getVideo()
+          })
+      }else{
+          self.jis.shift()
+          self.getVideo()
+      }
+      self.sleep()
   }else{
+      console.log('go getip')
     if(videos.length>0){
       var obj={'id':$id,'act':'up'}
       var jj=[]
@@ -54,12 +63,10 @@ Mend.prototype.getVideo=function (){
         jj.push(videos[i].join('$'))
       }
       obj['url']=['ck',jj.join('\n')].join('###');
-      console.log(obj)
-      $.get(server,obj,function(){self.getp()})
+      $.post(server,obj,function(){self.getp()})
     }else {
       console.log('over')
     }
-
   }
 }
 
