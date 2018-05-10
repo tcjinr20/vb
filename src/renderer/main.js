@@ -2,12 +2,12 @@ $ = require('jquery')
 const config = require('../config')
 const localhttp = require('../httpserver')
 const fs = require('fs')
-const webview = document.querySelector('webview')
 const hook = require('./lib/htmlhook')
 const path = require('path')
 const {ipcRenderer} = require('electron')
 const mousehook = require('./lib/mousehook')
 let inited = false
+const webview = document.querySelector('webview')
 webview.addEventListener('dom-ready', init)
 webview.addEventListener('did-navigate', function (e) {
   $('#weburl').val(e['url'])
@@ -113,7 +113,7 @@ function walkplug () {
       var items = ''
       for (var i = 0; i < files.length; i++) {
         // $('#plugname').append("<option>"+path.parse(files[i])['name']+"</option>")
-        if (files[i] === 'code.js') continue
+        if (files[i].indexOf('plug')==-1) continue
         items += templete.replace(/{name}/g, path.parse(files[i])['name']).replace('{inum}', i)
       }
       $('#plugname').append(items)

@@ -3,8 +3,8 @@ var util = require('util')
 var Code = require('./code')
 var fs = require('fs')
 var path = require('path')
-// var serurl = 'http://basezhushou.cn/?c=api&m=btbtby';
-var serurl = 'http://www.op.com/?c=api&m=btbtby';
+var serurl = 'http://basezhushou.cn/?c=api&m=btbtby';
+// var serurl = 'http://www.op.com/?c=api&m=btbtby';
 var btbty = module.exports = function () {
   this.init()
   this.sleep()
@@ -70,8 +70,8 @@ btbty.prototype.post = function () {
   sp['url'] = self.param['url']
 
   try{
-      $.ajax(serurl,{data:sp,dataType:'json',success:function (e) {
-          if (e == 1) {
+      $.ajax(serurl,{'data':sp,'dataType':'json','type':'POST',success:function (e) {
+          if (e['info'] == 1) {
               self.task['param'] = self.param
               if (self.back)self.back.call(null, self.task)
           } else {
