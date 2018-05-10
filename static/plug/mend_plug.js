@@ -9,13 +9,12 @@ var Mend = module.exports =function (jquery) {
   this.getp()
 }
 var server = "http://basezhushou.cn/?c=api&m=vod";
-var $id = 43;
+var $id = 90;
 Mend.prototype.getp = function (){
   var self = this;
     self.jis=[]
     console.log($id)
   $.post(server,{'id':$id},function (e) {
-      console.log(e)
     var url = e['url'].split('###')
     if(!e['id']){
       console.log('over')
@@ -39,15 +38,21 @@ var videos=[]
 Mend.prototype.getVideo=function (){
     console.log('getVideo')
   var self =this;
+    console.log(self.jis[0])
   if(self.jis.length>0){
       self.goon()
-      self.addURLcode(self.jis[0][1])
-      self.wait(1000);
-      self.addElecode({'label':'video'},function (e) {
-        videos.push([self.jis[0][0],$(e).attr('src')])
-        self.jis.shift()
-        self.getVideo()
-      })
+      if(self.jis[0][1]){
+          self.addURLcode(self.jis[0][1])
+          self.wait(1000);
+          self.addElecode({'label':'video'},function (e) {
+              videos.push([self.jis[0][0],$(e).attr('src')])
+              self.jis.shift()
+              self.getVideo()
+          })
+      }else{
+          self.jis.shift()
+          self.getVideo()
+      }
       self.sleep()
   }else{
       console.log('go getip')
